@@ -1,0 +1,30 @@
+{
+  "name": "markingman/session",
+  "description": "Simple PHP session handler.",
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": ">=8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "MarkIngman\\Session\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MarkIngman\\Session\\": [
+        "tests/"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~12.1.2",
+    "phpstan/phpstan": "~2.1.12"
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  }
+}
