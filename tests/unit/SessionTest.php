@@ -40,7 +40,7 @@ class SessionTest extends TestCase
 
 	public function testSetGetValue(): void
 	{
-		require_once __DIR__ . '/fixtures/TestSession.php';
+		require_once __DIR__ . '/../fixtures/TestSession.php';
 
 		$store = [];
 		$session = new TestSession($store);
