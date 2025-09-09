@@ -24,8 +24,7 @@ jobs:
 
       - name: Build Docker image (PHP ${{ matrix.php-version }})
         run: |
-          docker build \
-            --build-arg PHP_VERSION=${{ matrix.php-version }} -t ${{ env.TEST_IMG_NAME }}:${{ matrix.php-version }} .
+          docker build --build-arg PHP_VERSION=${{ matrix.php-version }} -t ${{ env.TEST_IMG_NAME }}:${{ matrix.php-version }} .
 
       - name: Run container and execute tests
         run: |
@@ -34,3 +33,4 @@ jobs:
       - name: Run container and execute analyse
         run: |
           docker run --rm ${{ env.TEST_IMG_NAME }}:${{ matrix.php-version }} vendor/bin/phpstan analyse -c phpstan.neon
+
