@@ -2,7 +2,9 @@ ARG PHP_VERSION=8.3
 FROM php:${PHP_VERSION}-cli
 
 RUN apt-get update && apt-get install -y \
-	zip
+	zip \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN pecl install xdebug-3.4.2 \
 	&& docker-php-ext-enable xdebug
