@@ -2,6 +2,9 @@
 
 namespace MarkIngman\Session;
 
+use function hash;
+use function is_array;
+
 class Session implements SessionInterface
 {
 	const string VALIDATE_KEY = '@';

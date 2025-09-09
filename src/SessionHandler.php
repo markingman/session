@@ -4,6 +4,12 @@ namespace MarkIngman\Session;
 
 use DirectoryIterator;
 use SessionHandlerInterface;
+use function file_get_contents;
+use function file_put_contents;
+use function filemtime;
+use function preg_match;
+use function time;
+use function unlink;
 
 class SessionHandler implements SessionHandlerInterface
 {
