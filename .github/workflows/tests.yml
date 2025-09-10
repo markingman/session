@@ -33,4 +33,3 @@ jobs:
       - name: Run container and execute analyse
         run: |
           docker run --rm ${{ env.TEST_IMG_NAME }}:${{ matrix.php-version }} vendor/bin/phpstan analyse -c phpstan.neon
-

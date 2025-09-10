@@ -1,6 +1,6 @@
 {
   "name": "markingman/session",
-  "description": "Simple PHP session handler.",
+  "description": "Simple PHP session handler",
   "license": "MIT",
   "type": "library",
   "require": {
