@@ -12,15 +12,24 @@ composer require markingman/session
 
 ## Configuration
 
-In `php.ini`:  
-`session.save_path = "/var/www/disk/var/sess"`  
-`session.save_handler = user` (optional)  
+In `php.ini`:
 
-`require_once /path/to/class/SessionHandler.php;
-session_set_save_handler(new MarkIngman\Session\SessionHandler(), true);
-session_start();`
+`session.save_path = "/var/www/disk/var/sess"`
 
-Consider  
+This is optional. It's passed to `SessionHandler::open(string $path, string $name)`.
+
+Note `session.name` is also passed to `SessionHandler::open(string $path, string $name)`.
+
+Can set `session.save_handler = user` but that's also optional, it's ignored if the user-level session storage handler is set.
+
+Set the user-level session storage handler in the code:
+
+`session_set_save_handler(new MarkIngman\Session\SessionHandler(), true)`
+
+Then the start the session with `session_start()`.
+
+In `php.ini`, consider:
+
 `session.sid_length`  
 `session.sid_bits_per_character`  
 `SessionHandler::VALID_SID_REGX`
