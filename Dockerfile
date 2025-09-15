@@ -22,7 +22,7 @@ FROM base
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY . /usr/src/app
 WORKDIR /usr/src/app
+COPY . .
 
 RUN /usr/bin/composer install --prefer-dist
