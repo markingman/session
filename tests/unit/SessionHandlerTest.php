@@ -18,7 +18,7 @@ class SessionHandlerTest extends TestCase
 
 	public function testWriteAndRead(): void
 	{
-		$id = 'sess_' . bin2hex(random_bytes(16));
+		$id = bin2hex(random_bytes(16));
 		$data = 'example_session_data';
 
 		$this->assertTrue($this->handler->write($id, $data));
@@ -37,11 +37,11 @@ class SessionHandlerTest extends TestCase
 
 	public function testDestroy(): void
 	{
-		$id = 'sess_' . bin2hex(random_bytes(16));
+		$id = bin2hex(random_bytes(16));
 		$this->handler->write($id, 'data');
-		$this->assertFileExists($this->dir . '/' . $id);
+		$this->assertFileExists($this->dir . '/' . SessionHandler::STORE_PREFIX . $id);
 		$this->assertTrue($this->handler->destroy($id));
-		$this->assertFileDoesNotExist($this->dir . '/' . $id);
+		$this->assertFileDoesNotExist($this->dir . '/' . SessionHandler::STORE_PREFIX . $id);
 	}
 
 	public function testDestroyInvalidId(): void
@@ -51,8 +51,8 @@ class SessionHandlerTest extends TestCase
 
 	public function testGcDeletesExpired(): void
 	{
-		$id = 'sess_' . bin2hex(random_bytes(16));
-		$path = $this->dir . '/' . $id;
+		$id = bin2hex(random_bytes(16));
+		$path = $this->dir . '/' . SessionHandler::STORE_PREFIX . $id;
 		file_put_contents($path, 'data');
 		touch($path, time() - 3600); // Set old timestamp
 
@@ -62,8 +62,8 @@ class SessionHandlerTest extends TestCase
 
 	public function testGcKeepsRecent(): void
 	{
-		$id = 'sess_' . bin2hex(random_bytes(16));
-		$path = $this->dir . '/' . $id;
+		$id = bin2hex(random_bytes(16));
+		$path = $this->dir . '/' . SessionHandler::STORE_PREFIX . $id;
 		file_put_contents($path, 'data');
 
 		$this->assertSame(0, $this->handler->gc(3600));
