@@ -21,6 +21,7 @@ class SessionHandlerTest extends TestCase
 		$id = bin2hex(random_bytes(16));
 		$data = 'example_session_data';
 
+		$this->assertEquals('', $this->handler->read($id));
 		$this->assertTrue($this->handler->write($id, $data));
 		$this->assertEquals($data, $this->handler->read($id));
 	}

@@ -37,7 +37,11 @@ class SessionHandler implements SessionHandlerInterface
 			return false;
 		}
 
-		return file_get_contents($this->dir . static::STORE_PREFIX . $id) ?: '';
+		if (!file_exists($this->dir . static::STORE_PREFIX . $id)) {
+			return '';
+		}
+
+		return file_get_contents($this->dir . static::STORE_PREFIX . $id);
 	}
 
 	public function write(string $id, string $data): bool
