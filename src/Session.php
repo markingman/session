@@ -39,23 +39,23 @@ class Session implements SessionInterface
 	}
 
 	/** @return string|bool|int|array<string|int, string>|null */
-	public function __get(string $k): string|bool|int|array|null
+	public function get(string $k): string|bool|int|array|null
 	{
 		return $this->store[$k] ?? null;
 	}
 
 	/** @param string|bool|int|array<string|int, string>|null $v */
-	public function __set(string $k, string|bool|int|array|null $v): void
+	public function set(string $k, string|bool|int|array|null $v): void
 	{
 		$this->store[$k] = $v;
 	}
 
-	public function __isset(string $k): bool
+	public function isset(string $k): bool
 	{
 		return isset($this->store[$k]);
 	}
 
-	public function __unset(string $k): void
+	public function unset(string $k): void
 	{
 		unset($this->store[$k]);
 	}

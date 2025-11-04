@@ -45,21 +45,30 @@ class SessionTest extends TestCase
 		$store = [];
 		$session = new TestSession($store);
 
-		$session->test = 123;
-		$this->assertEquals(123, $session->test);
+		$session->set('test', 123);
+		$this->assertEquals(123, $store['test'] ?? null);
+		$this->assertEquals(123, $session->get('test'));
 
-		$this->assertTrue(isset($session->test));
-		unset($session->test);
-		$this->assertNull($session->test);
-		$this->assertFalse(isset($session->test));
+		$this->assertTrue($session->isset('test'));
+		$session->unset('test');
+		$this->assertNull($session->get('test'));
+		$this->assertFalse(isset($store['test']));
+		$this->assertFalse($session->isset('test'));
+		$session->set('test', 123);
+		$this->assertEquals(123, $store['test'] ?? null);
+		$this->assertEquals(123, $session->get('test'));
 
-		$this->assertNull($session->not_set);
+		$store['test2'] = 456;
+		$this->assertTrue($session->isset('test2'));
+		$this->assertEquals(456, $session->get('test2'));
 
-		$session->test = 123;
-		$this->assertEquals(123, $session->test);
+		$this->assertNull($session->get('not_set'));
+
+		$session->set('test', 123);
+		$this->assertEquals(123, $session->get('test'));
 
 		$session->drop();
-		$this->assertNull($session->test);
+		$this->assertNull($session->get('test'));
 
 		$this->assertEquals('', $session->get_example());
 		$session->set_example('example');
