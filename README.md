@@ -1,6 +1,11 @@
 # Session Handler
 
-Simple PHP session handler
+Simple session handler for PHP applications
+
+## Status
+
+This is a small utility library shared for convenience.  
+Maintenance is best-effort and may be minimal.
 
 ## Installation
 
@@ -10,29 +15,51 @@ To use, require in `composer.json`, e.g:
 composer require markingman/session
 ```
 
-## Configuration
+## Usage Overview
 
 In `php.ini`:
 
-`session.save_path = "/var/www/disk/var/sess"`
+```ini
+session.save_path = "/var/www/disk/var/sess"
+```
 
 This is optional. It's passed to `SessionHandler::open(string $path, string $name)`.
 
-Note `session.name` is also passed to `SessionHandler::open(string $path, string $name)`.
+Set the user-level session storage handler in the code, e.g.:
 
-Can set `session.save_handler = user` but that's also optional, it's ignored if the user-level session storage handler is set.
+```php
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_save_handler(new SessionHandler(), true);
+    session_start();
+}
+```
 
-Set the user-level session storage handler in the code:
+Typically create a wrapper:
 
-`session_set_save_handler(new MarkIngman\Session\SessionHandler(), true)`
+```php
+class ExampleSession extends Session
+{
+	public function get_example(): string
+	{
+		$value = $this->get('example');
+		return is_string($value) ? $value : '';
+	}
 
-Then the start the session with `session_start()`.
+	public function set_example(string $value): void
+	{
+		$this->set('example', $value);
+	}
+}
+```
 
-In `php.ini`, consider:
+Instantiate with `$_SESSION` in production, or an `array()` for testing:
 
-`session.sid_length`  
-`session.sid_bits_per_character`  
-`SessionHandler::VALID_SID_REGX`
-	
+```php
+$session = new ExampleSession($_SESSION);
+```
+
+## License
+
+This project is licensed under the MIT License.
 
 
